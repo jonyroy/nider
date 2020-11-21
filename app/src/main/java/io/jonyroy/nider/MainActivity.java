@@ -4,10 +4,18 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class MainActivity extends Activity {
 
@@ -40,10 +48,32 @@ public class MainActivity extends Activity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
-            photo = (Bitmap) data.getExtras().get("data");
-            imageView.setImageBitmap(photo);
+            Uri proImageUri = data.getData();
+            CropImage.activity(proImageUri)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setMultiTouchEnabled(true)
+                    //.setMaxCropResultSize(1000,1000)
+                    //.setAspectRatio(2, 1)
+                    .start(this);
+
+
+            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                if (resultCode == RESULT_OK) {
+                    proImageUri = result.getUri();
+                    try {
+                        InputStream inputStream = getContentResolver().openInputStream(proImageUri);
+                        photo = BitmapFactory.decodeStream(inputStream);
+                        imageView.setImageBitmap(photo);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                    Exception error = result.getError();
+                }
+            }
+            //performCrop();
         }
-        performCrop();
     }
 
     private void performCrop() {
