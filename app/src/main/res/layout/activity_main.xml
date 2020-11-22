@@ -9,29 +9,29 @@
     android:background="#80BFFF">
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/captureButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Click" />
+        android:text="capture" />
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/captureImgView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_centerHorizontal="true" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/cropImgView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_centerHorizontal="true" />
 
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="Crop" />
+<!--    <Button-->
+<!--        android:id="@+id/button2"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:text="Crop" />-->
 
 </RelativeLayout>
